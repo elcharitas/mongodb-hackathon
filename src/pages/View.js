@@ -38,7 +38,13 @@ const View = () => {
           return "Something happend";
         } else if (response) {
           const { author, message, receiver, phone } = response.data.result;
-          const messages = message.split("\n");
+          let messages = message.split("\n");
+          if(messages.indexOf(cmessage) > -1){
+            messages = messages.slice(
+              messages.indexOf(cmessage),
+              messages.length
+            );
+          }
           if (accepted === 1) {
             setTimeout(() => {
               messages.length > 0 ? setMessage(messages.shift()) : setAccept(2);
@@ -96,7 +102,10 @@ const View = () => {
                       mx={8}
                     >
                       {accepted === 3 ? (
-                        <>
+                        <Get
+                          url="https://mongodb-hackathon.vercel.app/api/view"
+                          params={{ timeStamp }}
+                        >
                           <Text
                             textAlign="center"
                             fontSize={{ base: "sm", sm: "md" }}
@@ -120,7 +129,7 @@ const View = () => {
                               Yes!
                             </Button>
                           </Stack>
-                        </>
+                        </Get>
                       ) : accepted === 2 ? (
                         <Lottie
                           animationData={Charge}
@@ -168,6 +177,11 @@ const View = () => {
             </Box>
           );
         }
+        else return (
+          <Center h="80vh">
+            <Spinner size="xl" emptyColor="gray.200" color="red.400" />
+          </Center>
+        );
       }}
     </Get>
   );

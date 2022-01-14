@@ -114,21 +114,22 @@ const Create = () => {
                 }}
               >
                 {(error, response, isLoading) => {
-                  if(isLoading){
-                    return "Creating your new Note..."
-                  }
-                  else if(error){
+                  if(error){
                     return "An uncatchable error occured!"
                   }
-                  else if(response.data.result.acknowledged){
+                  else if (isLoading) {
+                    return "Creating your new Note...";
+                  }
+                  else if (response && response.data.result.acknowledged) {
                     const link =
                       "https://mongodb-hackathon.vercel.app/note-" + timeStamp;
                     return (
-                      <Text>Your new love note has been created...
+                      <Text>
+                        Your new love note has been created...
                         <a href={link}>{link}</a>
                       </Text>
-                    )
-                  }
+                    );
+                  } else return "Please Wait";
                 }}
               </Get>
             ) : (

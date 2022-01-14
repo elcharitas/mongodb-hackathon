@@ -52,7 +52,7 @@ export default function SmallWithSocial() {
         align={{ base: 'center', md: 'center' }}>
         <Text>© 2022 LoveNotes. All rights reserved</Text>
         <Stack direction={'row'} spacing={6}>
-          <SocialButton label={'Twitter'} href={'#'}>
+          <SocialButton label={'Twitter'} href={'https://twitter.com/el_charitas'}>
             <FaTwitter />
           </SocialButton>
           <SocialButton label={'YouTube'} href={'#'}>
