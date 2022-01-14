@@ -36,12 +36,12 @@ const View = () => {
       {(error, response, isLoading) => {
         if (error) {
           return "Something happend";
-        } else if (response) {
+        } else if (response && response.data.result) {
           const { author, message, receiver, phone } = response.data.result;
           let messages = message.split("\n");
-          if(messages.indexOf(cmessage) > -1){
+          if (messages.indexOf(cmessage) > -1) {
             messages = messages.slice(
-              messages.indexOf(cmessage),
+              messages.indexOf(cmessage) + 1,
               messages.length
             );
           }
@@ -102,10 +102,11 @@ const View = () => {
                       mx={8}
                     >
                       {accepted === 3 ? (
-                        <Get
-                          url="https://mongodb-hackathon.vercel.app/api/view"
-                          params={{ timeStamp }}
-                        >
+                        <>
+                          <Get
+                            url="https://mongodb-hackathon.vercel.app/api/view"
+                            params={{ timeStamp }}
+                          />
                           <Text
                             textAlign="center"
                             fontSize={{ base: "sm", sm: "md" }}
@@ -129,7 +130,7 @@ const View = () => {
                               Yes!
                             </Button>
                           </Stack>
-                        </Get>
+                        </>
                       ) : accepted === 2 ? (
                         <Lottie
                           animationData={Charge}
@@ -176,12 +177,12 @@ const View = () => {
               </Box>
             </Box>
           );
-        }
-        else return (
-          <Center h="80vh">
-            <Spinner size="xl" emptyColor="gray.200" color="red.400" />
-          </Center>
-        );
+        } else
+          return (
+            <Center h="80vh">
+              <Spinner size="xl" emptyColor="gray.200" color="red.400" />
+            </Center>
+          );
       }}
     </Get>
   );
