@@ -26,6 +26,7 @@ const Create = () => {
   const [message, setMsg] = useState("");
   const [phone, setPhone] = useState("");
   const {isOpen, onOpen, onClose} = useDisclosure();
+  const timeStamp = Date.now();
 
   return (
     <Page title="Add new Note">
@@ -109,10 +110,26 @@ const Create = () => {
                   receiver,
                   message,
                   phone,
-                  timeStamp: Date.now(),
+                  timeStamp,
                 }}
               >
-                
+                {(error, response, isLoading) => {
+                  if(isLoading){
+                    return "Creating your new Note..."
+                  }
+                  else if(error){
+                    return "An uncatchable error occured!"
+                  }
+                  else if(response.data.result.acknowledged){
+                    const link =
+                      "https://mongodb-hackathon.vercel.app/note-" + timeStamp;
+                    return (
+                      <Text>Your new love note has been created...
+                        <a href={link}>{link}</a>
+                      </Text>
+                    )
+                  }
+                }}
               </Get>
             ) : (
               ""

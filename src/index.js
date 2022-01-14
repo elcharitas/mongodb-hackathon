@@ -12,7 +12,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/new" element={<Create />} />
-        <Route path="/note-:time" element={<View />} />
+        <Route path="/note-:timeStamp" element={<View />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>,
