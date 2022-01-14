@@ -22,7 +22,7 @@ import { DesktopNav } from "./DesktopNav";
 import { MobileNav } from "./MobileNav";
 
 export default function WithSubnavigation({ title }) {
-  const appName = "Notes";
+  const appName = "LoveNotes";
   document.title = title + ' || ' + appName;
 
   const { isOpen, onToggle } = useDisclosure();
@@ -61,10 +61,10 @@ export default function WithSubnavigation({ title }) {
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
           >
-            <Link to="/"> &heart; {appName}</Link>
+            <Link to="/"> {appName}</Link>
           </Text>
 
-          <Flex display={{ base: "none", md: "flex" }} ml="30vw">
+          <Flex display={{ base: "none", md: "flex" }} ml="25vw">
             <DesktopNav />
           </Flex>
         </Flex>

@@ -40,7 +40,7 @@ const SocialButton = ({
 export default function SmallWithSocial() {
   return (
     <Box
-      bg={useColorModeValue('blackAlpha.900', 'gray.900')}
+      bg={useColorModeValue('red.900', 'gray.900')}
       color={useColorModeValue('gray.200', 'gray.200')}>
       <Container
         as={Stack}
@@ -50,7 +50,7 @@ export default function SmallWithSocial() {
         spacing={4}
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}>
-        <Text>© 2022 Happy New Year Bec. All rights reserved</Text>
+        <Text>© 2022 LoveNotes. All rights reserved</Text>
         <Stack direction={'row'} spacing={6}>
           <SocialButton label={'Twitter'} href={'#'}>
             <FaTwitter />

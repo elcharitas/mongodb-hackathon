@@ -11,8 +11,8 @@ ReactDOM.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/create" element={<Create />} />
-        <Route path="/:time" element={<View />} />
+        <Route path="/new" element={<Create />} />
+        <Route path="/note-:time" element={<View />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>,

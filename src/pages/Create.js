@@ -1,5 +1,5 @@
 import { Get } from "react-axios";
-import { createRef, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   FormControl,
@@ -10,15 +10,23 @@ import {
   Text,
   Textarea,
   useColorModeValue,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure
 } from "@chakra-ui/react";
 import { Page } from "../layouts";
 
 const Create = () => {
-  const fname = createRef();
-  const fhname = createRef();
-  const fmsg = createRef();
-  const fphone = createRef();
-  const [submit, setSubmit] = useState(false);
+  const [author, setName] = useState("");
+  const [receiver, setOtherName] = useState("");
+  const [message, setMsg] = useState("");
+  const [phone, setPhone] = useState("");
+  const {isOpen, onOpen, onClose} = useDisclosure();
+
   return (
     <Page title="Add new Note">
       <Flex
@@ -37,76 +45,87 @@ const Create = () => {
           p={6}
           my={12}
         >
-          {submit ?(
-            <Get url="https://mongodb-hackathon.vercel.app" params={{
-              author: fname.current.value,
-              receiver: fhname.current.value,
-              message: fmsg.current.value,
-              phone: fphone.current.value,
-              timeStamp: Date.now()
-            }}>
-              {(data, error) => (
-                data
-              )}
-            </Get>
-          ): (
-          <>
-            <Heading lineHeight={1.1} fontSize={{ base: "2xl", md: "3xl" }}>
-              Draft a new Note...
-            </Heading>
-            <FormControl id="name">
-              <Input
-                ref={fname}
-                placeholder="John Doe"
-                _placeholder={{ color: "gray.500" }}
-                type="text"
-              />
-            </FormControl>
-            <FormControl id="her-name">
-              <Input
-                ref={fhname}
-                placeholder="Joy Doe"
-                _placeholder={{ color: "gray.500" }}
-                type="text"
-              />
-            </FormControl>
-            <FormControl id="her-name">
-              <Input
-                ref={fphone}
-                placeholder="+xxx-xxx-xxx-xxx"
-                _placeholder={{ color: "gray.500" }}
-                type="phone"
-              />
-            </FormControl>
-            <FormControl id="message">
-              <Textarea
-                ref={fmsg}
-                placeholder="What would you like to tell Joy?"
-                _placeholder={{ color: "gray.500" }}
-              />
-              <Text
-                fontSize={{ base: "sm", sm: "md" }}
-                color={"gray.800"}
-              >
-                You can split the message by a line break.
-              </Text>
-            </FormControl>
-            <Stack spacing={6}>
-              <Button
-                bg={"red.400"}
-                color={"white"}
-                _hover={{
-                  bg: "red.500",
-                }}
-                onClick={() => setSubmit(true)}
-              >
-                Create Note
-              </Button>
-            </Stack>
-            </>
-          )}
+          <Heading lineHeight={1.1} fontSize={{ base: "2xl", md: "3xl" }}>
+            Draft a new Note...
+          </Heading>
+          <FormControl id="name">
+            <Input
+              placeholder="John Doe"
+              onChange={(e) => setName(e.target.value)}
+              _placeholder={{ color: "gray.500" }}
+              type="text"
+            />
+          </FormControl>
+          <FormControl id="her-name">
+            <Input
+              placeholder="Joy Doe"
+              _placeholder={{ color: "gray.500" }}
+              onChange={(e) => setOtherName(e.target.value)}
+              type="text"
+            />
+          </FormControl>
+          <FormControl id="phone">
+            <Input
+              placeholder="+xxx-xxx-xxx-xxx"
+              _placeholder={{ color: "gray.500" }}
+              onChange={(e) => setPhone(e.target.value)}
+              type="phone"
+            />
+          </FormControl>
+          <FormControl id="message">
+            <Textarea
+              placeholder="What would you like to tell Joy?"
+              _placeholder={{ color: "gray.500" }}
+              onChange={(e) => setMsg(e.target.value)}
+            />
+            <Text fontSize={{ base: "sm", sm: "md" }} color={"gray.800"}>
+              You can split the message by a line break.
+            </Text>
+          </FormControl>
+          <Stack spacing={6}>
+            <Button
+              bg={"red.400"}
+              color={"white"}
+              _hover={{
+                bg: "red.500",
+              }}
+              onClick={() => onOpen(true)}
+            >
+              Create Note
+            </Button>
+          </Stack>
         </Stack>
       </Flex>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody>
+            {isOpen ? (
+              <Get
+                url="https://mongodb-hackathon.vercel.app/api/create"
+                params={{
+                  author,
+                  receiver,
+                  message,
+                  phone,
+                  timeStamp: Date.now(),
+                }}
+              >
+                
+              </Get>
+            ) : (
+              ""
+            )}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Page>
   );
 };
