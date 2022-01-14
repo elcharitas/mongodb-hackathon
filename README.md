@@ -14,6 +14,7 @@ It uses MongoDB Atlas to save the data and mongodb native drivers to read the da
 - This project was created with create react app
 - The project uses Node.js native drivers for MongoDB
 - The source code is hosted on github at [elcharitas/mongodb-hackathon](https://github.com/elcharitas/mongodb-hackathon)
+- Music in this app is "Me You I" a song I love so much by [the cavemen](https://en.wikipedia.org/wiki/The_Cavemen_(band))
 
 ### Submission Category: Choose Your Own Adventure
 
